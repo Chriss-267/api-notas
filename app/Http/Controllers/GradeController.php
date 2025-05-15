@@ -222,6 +222,6 @@ class GradeController extends Controller
             ];
         });
 
-        return response()->json(["data" => $gradeFormated], 200);
+        return response()->json(["data" => $grades], 200);
     }
 }

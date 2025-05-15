@@ -20,6 +20,7 @@ Route::group([
 //Subjects
 Route::get('/subjects', [SubjectController::class, "index"]);
 Route::get('/subjects/{id}', [SubjectController::class, "show"]);
+Route::get('/subjects/alumno/{id}', [SubjectController::class, 'getSubjectsbyStudent']);
 
 //Inscriptions
 Route::post('/inscriptions', [InscriptionController::class, "store"]);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Subject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @OA\Tag(name="Subjects", description="API for subjects")
@@ -53,6 +54,20 @@ class SubjectController extends Controller
         return response()->json(["data" => $subject], 200);
 
         
+    }
+
+     //obbtener materias inscritas
+
+     public function getSubjectsbyStudent ($userId)
+     {
+
+        $materias = Subject::whereHas('users', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        })
+        ->with('users') 
+        ->get();
+
+        return response()->json($materias);
     }
 
 }
