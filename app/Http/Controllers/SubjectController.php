@@ -64,7 +64,7 @@ class SubjectController extends Controller
         $materias = Subject::whereHas('users', function ($query) use ($userId) {
             $query->where('user_id', $userId);
         })
-        ->with('users') 
+        ->with('teacher','users') 
         ->get();
 
         return response()->json($materias);
