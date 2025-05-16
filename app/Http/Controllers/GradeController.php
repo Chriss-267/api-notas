@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Grade;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -223,5 +224,20 @@ class GradeController extends Controller
         });
 
         return response()->json(["data" => $grades], 200);
+    }
+
+    //obtener las calificaciones de los alumnos en una materia
+
+    public function gradesStudentsSubject ($id)
+    {
+        $notas = DB::Select('Select user_id as alumno, subject_id as materia, grade as nota from grades 
+        where subject_id = ? ', [$id]);
+
+         if(collect($notas)->isEmpty()){
+            return response()->json(["data" => "No hay calificaciones en esta materia"], 200);
+        }
+
+
+        return response()->json(['data' => $notas], 200);
     }
 }

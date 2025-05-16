@@ -30,7 +30,7 @@ Route::get('/grades/{id}', [GradeController::class, "show"]);
 Route::post('/grades', [GradeController::class, "store"]);
 Route::patch('/grades/{id}', [GradeController::class, "update"]);
 Route::delete('/grades/{id}', [GradeController::class, "destroy"]);
-
+Route::get('/grades/materia/{id}', [GradeController::class, 'gradesStudentsSubject']);
 
 
 
