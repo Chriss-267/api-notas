@@ -228,18 +228,25 @@ class GradeController extends Controller
 
     //obtener las calificaciones de los alumnos en una materia
 
-    public function gradesStudentsSubject ($id)
+    public function gradesStudentsSubject($id)
     {
-        $notas = DB::Select('Select u.name as alumno, s.name as materia, grade as nota from grades g
-        LEFT JOIN users u ON u.id = g.user_id
-        LEFT JOIN subjects s ON s.id = g.subject_id
-        where subject_id = ? ', [$id]);
+        $notas = DB::select('
+            SELECT 
+                u.name AS alumno, 
+                s.name AS materia, 
+                g.grade AS nota 
+            FROM inscriptions i
+            LEFT JOIN users u ON u.id = i.user_id
+            LEFT JOIN subjects s ON s.id = i.subject_id
+            LEFT JOIN grades g ON g.subject_id = s.id AND g.user_id = u.id
+            WHERE i.subject_id = ?
+        ', [$id]);
 
-         if(collect($notas)->isEmpty()){
+        if (collect($notas)->isEmpty()) {
             return response()->json(["data" => "No hay calificaciones en esta materia"], 200);
         }
 
-
-        return response()->json(['data' => $notas], 200);
+        return response()->json(["data" => $notas], 200);
     }
+
 }
