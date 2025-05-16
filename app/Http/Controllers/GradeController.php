@@ -230,7 +230,9 @@ class GradeController extends Controller
 
     public function gradesStudentsSubject ($id)
     {
-        $notas = DB::Select('Select user_id as alumno, subject_id as materia, grade as nota from grades 
+        $notas = DB::Select('Select u.name as alumno, s.name as materia, grade as nota from grades g
+        LEFT JOIN users u ON u.id = g.user_id
+        LEFT JOIN subjects s ON s.id = g.subject_id
         where subject_id = ? ', [$id]);
 
          if(collect($notas)->isEmpty()){
