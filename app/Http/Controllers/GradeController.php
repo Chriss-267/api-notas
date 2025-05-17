@@ -232,6 +232,7 @@ class GradeController extends Controller
     {
         $notas = DB::select('
             SELECT 
+                i.user_id as userId,
                 i.id as inscriptionId,
                 u.name AS alumno, 
                 s.name AS materia, 
