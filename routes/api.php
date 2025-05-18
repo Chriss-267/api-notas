@@ -21,6 +21,7 @@ Route::group([
 Route::get('/subjects', [SubjectController::class, "index"]);
 Route::get('/subjects/{id}', [SubjectController::class, "show"]);
 Route::get('/subjects/alumno/{id}', [SubjectController::class, 'getSubjectsbyStudent']);
+Route::apiResource('subjects', SubjectController::class);
 
 //Inscriptions
 Route::post('/inscriptions', [InscriptionController::class, "store"]);
