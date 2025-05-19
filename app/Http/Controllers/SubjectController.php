@@ -62,7 +62,7 @@ class SubjectController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'user_id' => 'required|exists:users,id',
+             'user_id' => 'required|exists:users,id,rol,1', //AQUI ESTA LO DE LA VALIDACION
             'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 

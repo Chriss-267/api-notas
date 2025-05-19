@@ -10,8 +10,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 
-
-
 class AuthController extends Controller
 {
     /**
@@ -90,7 +88,7 @@ class AuthController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8|confirmed',
-            'rol' => 'required'
+            'rol' => 'required|in:0,1'
         ]);
 
         if($validator->fails()){
@@ -111,10 +109,84 @@ class AuthController extends Controller
             'token' => $this->respondWithToken($token),
             'user' => $user
         ]);
+    }
 
+ 
+    //CRUD para Profesores (rol = 1)
 
+    /**
+     * Listar todos los profesores (usuarios con rol = 1)
+     */
+    public function teachersIndex()
+    {
+        $teachers = User::where('rol', 1)->get();
+        return response()->json(['teachers' => $teachers], 200);
+    }
 
+    /**
+     * Mostrar detalles de un profesor
+     */
+    public function teachersShow($id)
+    {
+        $teacher = User::where('rol', 1)->find($id);
 
+        if (!$teacher) {
+            return response()->json(['error' => 'Profesor no encontrado'], 404);
+        }
+
+        return response()->json(['data' => $teacher], 200);
+    }
+
+    /**
+     * Actualizar datos de un profesor
+     */
+    public function teachersUpdate(Request $request, $id)
+    {
+        $teacher = User::where('rol', 1)->find($id);
+
+        if (!$teacher) {
+            return response()->json(['error' => 'Profesor no encontrado'], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'sometimes|required|string|max:255',
+            'email' => 'sometimes|required|email|unique:users,email,' . $teacher->id,
+            'password' => 'sometimes|required|min:6',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
+        if ($request->filled('name')) {
+            $teacher->name = $request->name;
+        }
+        if ($request->filled('email')) {
+            $teacher->email = $request->email;
+        }
+        if ($request->filled('password')) {
+            $teacher->password = bcrypt($request->password);
+        }
+
+        $teacher->save();
+
+        return response()->json(['message' => 'Profesor actualizado correctamente', 'data' => $teacher], 200);
+    }
+
+    /**
+     * Eliminar un profesor
+     */
+    public function teachersDestroy($id)
+    {
+        $teacher = User::where('rol', 1)->find($id);
+
+        if (!$teacher) {
+            return response()->json(['error' => 'Profesor no encontrado'], 404);
+        }
+
+        $teacher->delete();
+
+        return response()->json(['message' => 'Profesor eliminado correctamente'], 200);
     }
 }
-
+    
