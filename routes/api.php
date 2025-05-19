@@ -14,8 +14,13 @@ Route::group([
     $router->post('/register', [AuthController::class, 'register']);
     $router->post('/logout', [AuthController::class, 'logout']);
     $router->get('/me', [AuthController::class, 'me']);
-    
 });
+
+//CRUD de Profesores (usuarios con rol = 1)
+Route::get('/teachers', [AuthController::class, 'teachersIndex']);
+Route::get('/teachers/{id}', [AuthController::class, 'teachersShow']);
+Route::patch('/teachers/{id}', [AuthController::class, 'teachersUpdate']);
+Route::delete('/teachers/{id}', [AuthController::class, 'teachersDestroy']);
 
 //Subjects
 Route::get('/subjects', [SubjectController::class, "index"]);

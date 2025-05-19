@@ -23,7 +23,11 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
-        'rol'
+        'rol',
+    ];
+
+    protected $casts = [
+    'rol' => 'integer' //CHRIIIS esto asegura que se maneje como número, no como string lo del rol
     ];
 
     /**
@@ -56,6 +60,10 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsToMany(Subject::class);
     }
 
+    public function subjects()
+    {
+    return $this->hasMany(Subject::class, 'user_id');
+    }
    
     //jwt
 
