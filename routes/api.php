@@ -17,10 +17,12 @@ Route::group([
 });
 
 //CRUD de Profesores (usuarios con rol = 1)
-Route::get('/teachers', [AuthController::class, 'teachersIndex']);
-Route::get('/teachers/{id}', [AuthController::class, 'teachersShow']);
-Route::patch('/teachers/{id}', [AuthController::class, 'teachersUpdate']);
-Route::delete('/teachers/{id}', [AuthController::class, 'teachersDestroy']);
+Route::middleware('auth:api')->group(function () {
+    Route::get('/teachers', [AuthController::class, 'teachersIndex']);
+    Route::get('/teachers/{id}', [AuthController::class, 'teachersShow']);
+    Route::patch('/teachers/{id}', [AuthController::class, 'teachersUpdate']);
+    Route::delete('/teachers/{id}', [AuthController::class, 'teachersDestroy']);
+});
 
 //Subjects
 Route::get('/subjects', [SubjectController::class, "index"]);
@@ -37,7 +39,3 @@ Route::post('/grades', [GradeController::class, "store"]);
 Route::patch('/grades/{id}', [GradeController::class, "update"]);
 Route::delete('/grades/{id}', [GradeController::class, "destroy"]);
 Route::get('/grades/materia/{id}', [GradeController::class, 'gradesStudentsSubject']);
-
-
-
-
