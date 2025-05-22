@@ -18,9 +18,7 @@ Route::group([
 });
 
 //Teachers (usuarios con rol = 1)
-Route::middleware('auth:api')->group(function () {
-    Route::apiResource('teachers', TeacherController::class);
-});
+Route::apiResource('teachers', TeacherController::class);
 
 //Subjects
 Route::get('/subjects', [SubjectController::class, "index"]);
