@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GradeController;
@@ -16,12 +17,9 @@ Route::group([
     $router->get('/me', [AuthController::class, 'me']);
 });
 
-//CRUD de Profesores (usuarios con rol = 1)
+//Teachers (usuarios con rol = 1)
 Route::middleware('auth:api')->group(function () {
-    Route::get('/teachers', [AuthController::class, 'teachersIndex']);
-    Route::get('/teachers/{id}', [AuthController::class, 'teachersShow']);
-    Route::patch('/teachers/{id}', [AuthController::class, 'teachersUpdate']);
-    Route::delete('/teachers/{id}', [AuthController::class, 'teachersDestroy']);
+    Route::apiResource('teachers', TeacherController::class);
 });
 
 //Subjects
