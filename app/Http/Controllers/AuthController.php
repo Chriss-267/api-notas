@@ -189,4 +189,3 @@ class AuthController extends Controller
         return response()->json(['message' => 'Profesor eliminado correctamente'], 200);
     }
 }
-    
