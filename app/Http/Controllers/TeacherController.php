@@ -13,7 +13,7 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        $teachers = User::where('rol', 1)->get();
+        $teachers = User::where('rol', '1')->get();
 
         return response()->json([
             'teachers' => $teachers
@@ -40,7 +40,7 @@ class TeacherController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'rol' => 1,
+            'rol' => '1',
         ]);
 
         return response()->json([
@@ -54,7 +54,7 @@ class TeacherController extends Controller
      */
     public function show($id)
     {
-        $teacher = User::where('rol', 1)->find($id);
+        $teacher = User::where('rol', '1')->find($id);
 
         if (!$teacher) {
             return response()->json(['error' => 'Profesor no encontrado'], 404);
@@ -68,7 +68,7 @@ class TeacherController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $teacher = User::where('rol', 1)->find($id);
+        $teacher = User::where('rol', '1')->find($id);
 
         if (!$teacher) {
             return response()->json(['error' => 'Profesor no encontrado'], 404);
@@ -105,7 +105,7 @@ class TeacherController extends Controller
      */
     public function destroy($id)
     {
-        $teacher = User::where('rol', 1)->find($id);
+        $teacher = User::where('rol', '1')->find($id);
 
         if (!$teacher) {
             return response()->json(['error' => 'Profesor no encontrado'], 404);

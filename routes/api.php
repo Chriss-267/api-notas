@@ -18,8 +18,7 @@ Route::group([
 });
 
 //Teachers (usuarios con rol = 1)
-Route::apiResource('teachers', TeacherController::class)->only(['index', 'show']);
-Route::apiResource('teachers', TeacherController::class)->only(['store', 'update', 'destroy'])->middleware('auth:api');
+Route::apiResource('teachers', TeacherController::class);
 
 //Subjects
 Route::get('/subjects', [SubjectController::class, "index"]);

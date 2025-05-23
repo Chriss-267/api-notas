@@ -26,9 +26,9 @@ class User extends Authenticatable implements JWTSubject
         'rol',
     ];
 
-    protected $casts = [
-    'rol' => 'integer' //CHRIIIS esto asegura que se maneje como número, no como string lo del rol
-    ];
+    // protected $casts = [
+    // 'rol' => 'integer' //CHRIIIS esto asegura que se maneje como número, no como string lo del rol
+    // ];
 
     /**
      * The attributes that should be hidden for serialization.
