@@ -72,12 +72,11 @@ class SubjectController extends Controller
             'user_id' => $request->user_id
         ]);
 
-        //guardar imagen si existe
         if ($request->hasFile('imagen')) {
-            $imageName = time().'.'.$request->imagen->extension();
-            $request->imagen->move(public_path('images/subjects'), $imageName);
-            $subject->imagen = $imageName;
+            $path = $request->file('imagen')->store('subjects', 'public');
+            $subject->imagen = $path;
         }
+        
 
         $subject->save();
 
