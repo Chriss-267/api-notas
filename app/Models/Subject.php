@@ -26,7 +26,7 @@ class Subject extends Model
     
     public function teacher()
     {
-        return $this->belongsTo(User::class, 'user_id')->where('rol', 1);
+        return $this->belongsTo(User::class, 'user_id')->where('rol', '1');
     }
 
 

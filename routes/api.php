@@ -21,8 +21,8 @@ Route::group([
 Route::apiResource('teachers', TeacherController::class);
 
 //Subjects
-Route::get('/subjects', [SubjectController::class, "index"]);
-Route::get('/subjects/{id}', [SubjectController::class, "show"]);
+// Route::get('/subjects', [SubjectController::class, "index"]);
+// Route::get('/subjects/{id}', [SubjectController::class, "show"]);
 Route::get('/subjects/alumno/{id}', [SubjectController::class, 'getSubjectsbyStudent']);
 Route::apiResource('subjects', SubjectController::class);
 
