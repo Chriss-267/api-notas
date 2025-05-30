@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Subject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -132,17 +133,19 @@ class SubjectController extends Controller
 
         //rellena solo los campos que vienen en la solicitud
         $subject->fill($validated);
+        $subject->name = $request->name;
+        $subject->description = $request->description;
+        $subject->user_id = $request->user_id;
 
-        //si hay nueva imagen, reemplaza la anterior
         if ($request->hasFile('imagen')) {
-            //elimina imagen anterior si existe
-            if ($subject->imagen && file_exists(public_path('images/subjects/'.$subject->imagen))) {
-                unlink(public_path('images/subjects/'.$subject->imagen));
+            // Elimina la imagen anterior si existe
+            if ($subject->imagen && Storage::disk('public')->exists($subject->imagen)) {
+                \Storage::disk('public')->delete($subject->imagen);
             }
-
-            $imageName = time().'.'.$request->imagen->extension();
-            $request->imagen->move(public_path('images/subjects'), $imageName);
-            $subject->imagen = $imageName;
+    
+            // Guarda la nueva imagen en storage/app/public/subjects
+            $path = $request->file('imagen')->store('subjects', 'public');
+            $subject->imagen = $path;
         }
 
         $subject->save();

@@ -30,16 +30,17 @@ class AuthController extends Controller
     public function login()
     {
         $credentials = request(['email', 'password']);
-
-        if (! $token = Auth::attempt($credentials)) {
+    
+        if (! $token = auth('api')->attempt($credentials)) {
             return response()->json(['error' => 'Credenciales incorrectas'], 401);
         }
-
-        $user = Auth::user();
-
+    
+        $user = auth('api')->user();
+    
         return response()->json([
-            "token" => $this->respondWithToken($token),
-            "user" => $user
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'user' => $user
         ]);
     }
 
@@ -102,11 +103,19 @@ class AuthController extends Controller
             'rol' => $request->rol
         ]);
 
-        $token = Auth::attempt($request->only('email', 'password'));
+        // Autenticación con el guard 'api'
+        $token = auth('api')->attempt([
+            'email' => $request->email,
+            'password' => $request->password
+        ]);
+
+        if (! $token) {
+            return response()->json(['error' => 'No se pudo autenticar al registrar'], 401);
+        }
 
         return response()->json([
-            'message' => 'Registro exitoso',
-            'token' => $this->respondWithToken($token),
+            'access_token' => $token,
+            'token_type' => 'bearer',
             'user' => $user
         ]);
     }
