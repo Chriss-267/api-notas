@@ -16,14 +16,14 @@ class SubjectSeeder extends Seeder
         Subject::create([
             "name" => "Programación III",
             "description" => "Curso de programación en Java",
-            "user_id" => 1
+            
         ]);
 
 
         Subject::create([
             "name" => "Arquitectura de aplicaciones en la nube",
             "description" => "Curso de Aws",
-            "user_id" => 2
+            
         ]);
 
 
